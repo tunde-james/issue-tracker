@@ -44,4 +44,6 @@ async function IssusesPage() {
   );
 }
 
+export const dyanamic = 'force-dynamic';
+
 export default IssusesPage;

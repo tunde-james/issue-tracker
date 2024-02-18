@@ -24,10 +24,10 @@ function AssigneeSelect({ issue }: { issue: Issue }) {
 
   return (
     <Select.Root
-      defaultValue={issue.assignedToUserId || ''}
+      defaultValue={issue.assignedToUserId || 'unassigned'}
       onValueChange={(userId) => {
         axios.patch('/api/issues/' + issue.id, {
-          assignedToUserId: userId === 'unassigned' ? "" : userId,
+          assignedToUserId: userId === 'unassigned' ? null : userId,
         });
       }}
     >

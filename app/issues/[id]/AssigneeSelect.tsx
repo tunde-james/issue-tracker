@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
-function AssigneeSelect({ issue }: { issue: Issue }) {
+const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const { data: users, error, isLoading } = useUsers();
 
   if (isLoading) return <Skeleton />;
@@ -16,8 +16,8 @@ function AssigneeSelect({ issue }: { issue: Issue }) {
 
   const assignIssue = (userId: string) => {
     axios
-      .patch('/xapi/issues/' + issue.id, {
-        assignedToUserId: userId === 'unassigned' ? null : userId,
+      .patch('/api/issues/' + issue.id, {
+        assignedToUserId: userId || null,
       })
       .catch(() => {
         toast.error('Changes could not be saved.');
@@ -46,13 +46,13 @@ function AssigneeSelect({ issue }: { issue: Issue }) {
       <Toaster />
     </>
   );
-}
+};
 
 const useUsers = () =>
   useQuery<User[]>({
     queryKey: ['users'],
     queryFn: () => axios.get('/api/users').then((res) => res.data),
-    staleTime: 60 * 1000, // 60s
+    staleTime: 60 * 1000, //60s
     retry: 3,
   });
 
